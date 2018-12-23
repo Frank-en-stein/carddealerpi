@@ -11,7 +11,7 @@ exports.dealCards = function(req, res) {
 
   var availableCards = [...Array(52).keys()].filter((x) => { return !global.dealtCards.includes(x); });
   var first = availableCards[Math.floor(Math.random()*100) % availableCards.length];
-  global.dealCards.push(first);
+  global.dealtCards.push(first);
 
   availableCards = [...Array(52).keys()].filter((x) => { return !global.dealtCards.includes(x); });
   var second = availableCards[Math.floor(Math.random()*100) % availableCards.length];
