@@ -11,11 +11,11 @@ exports.dealCards = function(req, res) {
 
   var availableCards = [...Array(52).keys()].filter((x) => { return !global.dealtCards.includes(x); });
   var first = availableCards[Math.floor(Math.random()*100) % availableCards.length];
-  glocal.dealCards.push(first);
+  global.dealCards.push(first);
 
   availableCards = [...Array(52).keys()].filter((x) => { return !global.dealtCards.includes(x); });
   var second = availableCards[Math.floor(Math.random()*100) % availableCards.length];
-  global.dealtCards.push(first, second);
+  global.dealtCards.push(second);
   res.json({cards: [first, second]});
 };
 
