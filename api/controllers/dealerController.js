@@ -5,13 +5,15 @@ exports.dealCards = function(req, res) {
       global.dealtCards = [];
   }
   if (global.dealtCards.length === 52) {
-      res.json({msg: "game ended"});
+      res.json({msg: "Game ended"});
       return;
   }
 
   var availableCards = [...Array(52).keys()].filter((x) => { return !global.dealtCards.includes(x); });
-
   var first = availableCards[Math.floor(Math.random()*100) % availableCards.length];
+  glocal.dealCards.push(first);
+
+  availableCards = [...Array(52).keys()].filter((x) => { return !global.dealtCards.includes(x); });
   var second = availableCards[Math.floor(Math.random()*100) % availableCards.length];
   global.dealtCards.push(first, second);
   res.json({cards: [first, second]});
