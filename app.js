@@ -1,7 +1,7 @@
 var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
-  ioHook = require('ioHook'),
+  ioHook = require('iohook'),
   dealer = require('./api/controllers/dealerController'),
   port = process.env.PORT || 3000;
 
