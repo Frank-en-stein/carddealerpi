@@ -1,7 +1,6 @@
 var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
-  ioHook = require('iohook'),
   dealer = require('./api/controllers/dealerController'),
   port = process.env.PORT || 3000;
 
@@ -13,9 +12,16 @@ routes(app);
 
 app.listen(port);
 
-ioHook.on('mousewheel', event => {
-  dealer.registerMouseWheel(event);
+const spawn = require("child_process").spawn;
+const pythonProcess = spawn('python',["native/EventRegistrer.py"]);
+
+pythonProcess.stdout.on('data', (data) => {
+    try {
+        var event = JSON.parse(data.toString());
+        dealer.registerMouseWheel(event);
+    } catch (err) {
+        console.log(err);
+    }
 });
-ioHook.start();
 
 console.log('RESTful API server started on: ' + port);
