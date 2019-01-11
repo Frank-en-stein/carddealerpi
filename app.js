@@ -20,7 +20,7 @@ pythonProcess.stdout.on('data', (data) => {
         var event = JSON.parse(data.toString());
         dealer.registerMouseWheel(event);
     } catch (err) {
-        console.log(err);
+        //console.log(err);
     }
 });
 
