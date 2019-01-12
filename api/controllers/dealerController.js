@@ -37,7 +37,7 @@ exports.registerMouseWheel = function(event) {
             else this.downtime = new Date();
         }
         var timediff = Math.abs(this.uptime.getTime() - this.downtime.getTime());
-        if (timediff < 300 && timediff > 0) {
+        if (timediff < 500 && timediff > 0) {
             if (this.count < 7) this.count++;
             else {
                 this.count = 0;
