@@ -17,6 +17,7 @@ const pythonProcess = spawn('python',["native/EventRegistrer.py"]);
 
 pythonProcess.stdout.on('data', (data) => {
     try {
+        console.log(data.toString());
         var event = JSON.parse(data.toString());
         dealer.registerMouseWheel(event);
     } catch (err) {
