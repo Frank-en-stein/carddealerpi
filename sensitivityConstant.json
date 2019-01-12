@@ -1,0 +1,6 @@
+{
+    "numberOfUpScrollsRequired": 25,
+    "maxMilisecondsToInvalidateLastScrollUp": 500,
+    "maxMilisToScroll3Xup": 1000,
+    "scrollUpCountLogOn": true
+}

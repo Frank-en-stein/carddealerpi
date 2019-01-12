@@ -19,7 +19,7 @@ pythonProcess.stdout.on('data', (data) => {
     try {
         //console.log(data.toString());
         var event = JSON.parse(data.toString());
-        dealer.registerMouseWheel(event);
+        dealer.registerMouseWheel3Xup(event);
     } catch (err) {
         //console.log(err);
     }

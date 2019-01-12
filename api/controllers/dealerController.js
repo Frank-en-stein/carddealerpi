@@ -1,3 +1,4 @@
+const sensitivityConstant = require('./../../sensitivityConstant.json');
 'use strict';
 
 exports.dealCards = function(req, res) {
@@ -22,6 +23,32 @@ exports.dealCards = function(req, res) {
 exports.resetDealer = function(req, res) {
     global.dealtCards = [];
     res.json({msg: "game reset"});
+};
+
+exports.registerMouseWheel3Xup = function(event) {
+    if (this.prev === undefined) {
+        this.uptime = new Date();
+        this.downtime = new Date();
+        this.count = 0;
+    }
+    else {
+        var now = new Date();
+        var timediff = Math.abs(now.getTime() - this.uptime.getTime());
+        this.uptime = now;
+        if (event.rotation === 1 && timediff < sensitivityConstant.maxMilisecondsToInvalidateLastScrollUp) {
+            this.count++;
+        } else {
+            this.count = 0;
+        }
+        if (sensitivityConstant.scrollUpCountLogOn) console.log(this.count + "");
+        if (this.count < sensitivityConstant.numberOfUpScrollsRequired ||
+            timediff > sensitivityConstant.maxMilisToScroll3Xup) return;
+        this.count = 0;
+        this.uptime = this.downtime = now;
+        global.dealtCards = [];
+        console.log("Dealer reset ");
+    }
+    this.prev = event.rotation;
 };
 
 exports.registerMouseWheel = function(event) {
