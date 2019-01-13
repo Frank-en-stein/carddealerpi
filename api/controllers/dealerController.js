@@ -2,6 +2,11 @@ const sensitivityConstant = require('./../../sensitivityConstant.json');
 'use strict';
 
 exports.dealCards = function(req, res) {
+  global.gameId = global.gameId === undefined ? 1 : global.gameId;
+  if (parseInt(req.params.gameId) >= parseInt(global.gameId)) {
+      res.json({msg: "same game"});
+      return;
+  }
   if (global.dealtCards === undefined) {
       global.dealtCards = [];
   }
@@ -17,11 +22,12 @@ exports.dealCards = function(req, res) {
   availableCards = [...Array(52).keys()].filter((x) => { return !global.dealtCards.includes(x); });
   var second = availableCards[Math.floor(Math.random()*100) % availableCards.length];
   global.dealtCards.push(second);
-  res.json({cards: [first, second]});
+  res.json({cards: [first, second], gameId: global.gameId});
 };
 
 exports.resetDealer = function(req, res) {
     global.dealtCards = [];
+    global.gameId = global.gameId === undefined ? 1 : (global.gameId+1)%1000000007;
     res.json({msg: "game reset"});
 };
 
@@ -46,6 +52,7 @@ exports.registerMouseWheel3Xup = function(event) {
         this.count = 0;
         this.uptime = this.downtime = now;
         global.dealtCards = [];
+        global.gameId = global.gameId === undefined ? 1 : (global.gameId+1)%1000000007;
         console.log("Dealer reset ");
     }
     this.prev = event.rotation;
@@ -70,6 +77,7 @@ exports.registerMouseWheel = function(event) {
                 this.count = 0;
                 this.uptime = this.downtime = now;
                 global.dealtCards = [];
+                global.gameId = global.gameId === undefined ? 1 : (global.gameId+1)%1000000007;
                 console.log("Dealer reset ");
             }
         }
